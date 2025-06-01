@@ -17,10 +17,6 @@ sentinela_da_mata/
 │   ├── modelo_risco_queimada.pkl # Modelo Treinado
 │   └── requirements.txt # Dependências do projeto
 │
-├── dashboard/
-│   ├── app.py
-│   └── requirements.txt
-│
 ├── .gitignore
 └── README.md
 ```
