@@ -61,6 +61,49 @@ Acesse a documentação da API:
 
 👉 **http://{base_url_api}:5000/apidocs**
 
+### 🗂️ Estrutura do Banco de Dados
+
+O projeto utiliza um banco **MySQL** com as seguintes tabelas:
+
+### 📋 Tabela: `leituras`
+
+Armazena cada leitura capturada pelo ESP32:
+
+| Campo         | Tipo        | Descrição                                      |
+|---------------|-------------|------------------------------------------------|
+| `id`          | INT (PK)    | Identificador da leitura                       |
+| `temperatura` | FLOAT       | Temperatura ambiente capturada (°C)           |
+| `umidade`     | FLOAT       | Umidade relativa do ar (%)                     |
+| `fumaca`      | INT         | Valor bruto do sensor de fumaça (MQ-2)         |
+| `risco`       | ENUM        | Classificação: `baixo`, `moderado`, `alto`    |
+| `data_hora`   | DATETIME    | Timestamp da leitura (default: NOW)           |
+
+### 🔥 Tabela: `alertas`
+
+Registra alertas emitidos com base nas leituras de risco:
+
+| Campo         | Tipo        | Descrição                                         |
+|---------------|-------------|--------------------------------------------------|
+| `id`          | INT (PK)    | Identificador do alerta                          |
+| `leitura_id`  | INT (FK)    | Referência à leitura associada                   |
+| `tipo`        | ENUM        | Tipo do alerta: `moderado` ou `alto`            |
+| `mensagem`    | VARCHAR     | Mensagem enviada no alerta                       |
+| `enviado`     | BOOLEAN     | Se o alerta foi enviado por e-mail (default: FALSE) |
+| `data_alerta` | DATETIME    | Timestamp do alerta                              |
+
+### 📬 Tabela: `destinatarios_alerta`
+
+Define as pessoas que receberão os alertas:
+
+| Campo        | Tipo        | Descrição                                |
+|--------------|-------------|-------------------------------------------|
+| `id`         | INT (PK)    | Identificador do destinatário             |
+| `nome`       | VARCHAR     | Nome da pessoa                            |
+| `email`      | VARCHAR     | Endereço de e-mail                        |
+| `telefone`   | VARCHAR     | Telefone (para futuros envios por SMS)    |
+| `send_email` | BOOLEAN     | Deseja receber alertas por e-mail?        |
+| `send_sms`   | BOOLEAN     | Deseja receber alertas por SMS? (futuro)  |
+
 ---
 
 ## 🧠 Fase 3 - Machine Learning com Scikit-Learn
