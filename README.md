@@ -17,15 +17,13 @@ sentinela_da_mata/
 │   ├── modelo_risco_queimada.pkl # Modelo Treinado
 │   └── requirements.txt # Dependências do projeto
 │
-├── dashboard/
-│   ├── app.py
-│   └── requirements.txt
-│
 ├── .gitignore
 └── README.md
 ```
 
 ## 🌡️ Fase 1 - ESP32 com Sensores Ambientais
+
+<img src="sensores/simulacao_esp32.png" alt="Simulação ESP32 no Wokwi" width="600"/>
 
 O circuito foi simulado na plataforma [Wokwi](https://wokwi.com/) com os seguintes componentes:
 
@@ -62,6 +60,49 @@ python app.py
 Acesse a documentação da API:
 
 👉 **http://{base_url_api}:5000/apidocs**
+
+### 🗂️ Estrutura do Banco de Dados
+
+O projeto utiliza um banco **MySQL** com as seguintes tabelas:
+
+### 📋 Tabela: `leituras`
+
+Armazena cada leitura capturada pelo ESP32:
+
+| Campo         | Tipo        | Descrição                                      |
+|---------------|-------------|------------------------------------------------|
+| `id`          | INT (PK)    | Identificador da leitura                       |
+| `temperatura` | FLOAT       | Temperatura ambiente capturada (°C)           |
+| `umidade`     | FLOAT       | Umidade relativa do ar (%)                     |
+| `fumaca`      | INT         | Valor bruto do sensor de fumaça (MQ-2)         |
+| `risco`       | ENUM        | Classificação: `baixo`, `moderado`, `alto`    |
+| `data_hora`   | DATETIME    | Timestamp da leitura (default: NOW)           |
+
+### 🔥 Tabela: `alertas`
+
+Registra alertas emitidos com base nas leituras de risco:
+
+| Campo         | Tipo        | Descrição                                         |
+|---------------|-------------|--------------------------------------------------|
+| `id`          | INT (PK)    | Identificador do alerta                          |
+| `leitura_id`  | INT (FK)    | Referência à leitura associada                   |
+| `tipo`        | ENUM        | Tipo do alerta: `moderado` ou `alto`            |
+| `mensagem`    | VARCHAR     | Mensagem enviada no alerta                       |
+| `enviado`     | BOOLEAN     | Se o alerta foi enviado por e-mail (default: FALSE) |
+| `data_alerta` | DATETIME    | Timestamp do alerta                              |
+
+### 📬 Tabela: `destinatarios_alerta`
+
+Define as pessoas que receberão os alertas:
+
+| Campo        | Tipo        | Descrição                                |
+|--------------|-------------|-------------------------------------------|
+| `id`         | INT (PK)    | Identificador do destinatário             |
+| `nome`       | VARCHAR     | Nome da pessoa                            |
+| `email`      | VARCHAR     | Endereço de e-mail                        |
+| `telefone`   | VARCHAR     | Telefone (para futuros envios por SMS)    |
+| `send_email` | BOOLEAN     | Deseja receber alertas por e-mail?        |
+| `send_sms`   | BOOLEAN     | Deseja receber alertas por SMS? (futuro)  |
 
 ---
 
