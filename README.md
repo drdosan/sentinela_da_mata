@@ -18,11 +18,17 @@ sentinela_da_mata/
 │   └── requirements.txt # Dependências do projeto
 │
 ├── analise_r/
+│   ├── main.R # Script em R
 │   └── global_solution.Rproj # Projeto em R
 │
 ├── .gitignore
 └── README.md
 ```
+
+### ▶️ Vídeo de Evidência do Funcionamento do Projeto.
+
+[https://youtu.be/lDRflYVqzes](https://youtu.be/lDRflYVqzes)
+
 
 ## 🌡️ Fase 1 - ESP32 com Sensores Ambientais
 
@@ -124,6 +130,13 @@ cd api
 pip install -r requirements.txt
 python treinar_modelo.py
 ```
+---
+
+## 🌡️ Fase 4 - Anãlise dos Dados em R
+
+<img src="analise_r/analise_em_r.png" alt="Simulação Dados em R" width="600"/>
+
+Basta abrir no R Studio o projeto que está na pasta e executar o arquivo main.R.
 
 ---
 

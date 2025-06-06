@@ -29,3 +29,4 @@ venv/
 # macOS / Linux / Windows system files
 .DS_Store
 Thumbs.db
+.Rproj.user

@@ -1,0 +1,321 @@
+# SENTINELA DA MATA
+# André de Oliveira Santos Burger;
+# Diogo Rebello dos Santos;
+# Marcos Vinícius dos Santos Fernandes;
+# Vera Maria Chaves de Souza.
+# --------------------------------------
+# 1. INSTALAÇÃO E CARREGAMENTO DOS PACOTES
+# --------------------------------------
+# Instalação (descomente se necessário)
+install.packages("tidyverse")
+install.packages("sf")
+install.packages("raster")
+install.packages("pROC")
+install.packages("caret")
+install.packages("plotly")
+# Carregamento dos pacotes
+library(tidyverse)
+library(sf)
+library(raster)
+library(pROC)
+library(caret)
+library(plotly)
+# --------------------------------------
+# 2. CARREGAMENTO DOS DADOS
+# --------------------------------------
+# CSV com dados dos sensores
+dados <- read_csv("dados_ambientais.csv")
+# SENTINELA DA MATA
+# André de Oliveira Santos Burger;
+# Diogo Rebello dos Santos;
+# Marcos Vinícius dos Santos Fernandes;
+# Vera Maria Chaves de Souza.
+# --------------------------------------
+# 1. INSTALAÇÃO E CARREGAMENTO DOS PACOTES
+# --------------------------------------
+# Instalação (descomente se necessário)
+install.packages("tidyverse")
+install.packages("sf")
+install.packages("raster")
+install.packages("pROC")
+install.packages("caret")
+install.packages("plotly")
+# Carregamento dos pacotes
+library(tidyverse)
+library(sf)
+library(raster)
+library(pROC)
+library(caret)
+library(plotly)
+# --------------------------------------
+# 2. CARREGAMENTO DOS DADOS
+# --------------------------------------
+# CSV com dados dos sensores
+dados <- read_csv("dados_ambientais.csv")
+# SENTINELA DA MATA
+# André de Oliveira Santos Burger;
+# Diogo Rebello dos Santos;
+# Marcos Vinícius dos Santos Fernandes;
+# Vera Maria Chaves de Souza.
+# --------------------------------------
+# 1. INSTALAÇÃO E CARREGAMENTO DOS PACOTES
+# --------------------------------------
+# Instalação (descomente se necessário)
+install.packages("tidyverse")
+install.packages("sf")
+install.packages("raster")
+install.packages("pROC")
+install.packages("caret")
+install.packages("plotly")
+# Carregamento dos pacotes
+library(tidyverse)
+library(sf)
+library(raster)
+library(pROC)
+library(caret)
+library(plotly)
+# --------------------------------------
+# 2. CARREGAMENTO DOS DADOS
+# --------------------------------------
+# CSV com dados dos sensores
+dados <- read_csv("dados_ambientais.csv")
+head(dados)
+# --------------------------------------
+# 3. ANÁLISE EXPLORATÓRIA (EDA)
+# --------------------------------------
+# Visão geral
+summary(dados)
+str(dados)
+# Correlação entre temperatura e nível de fumaça
+correlacao <- cor(dados$temperatura_ar, dados$nivel_fumaca, use = "complete.obs")
+print(paste("Correlação entre temperatura e fumaça:", round(correlacao, 2)))
+# Gráfico de dispersão
+ggplot(dados, aes(x = temperatura_ar, y = nivel_fumaca)) +
+geom_point(color = "firebrick") +
+geom_smooth(method = "lm", se = FALSE, color = "darkblue") +
+labs(title = "Temperatura vs. Nível de Fumaça",
+x = "Temperatura do Ar (°C)",
+y = "Nível de Fumaça (Sensor MQ-2)")
+# Gráfico interativo da umidade
+p <- ggplot(dados, aes(x = data_hora, y = umidade_ar)) +
+geom_line(color = "darkgreen") +
+labs(title = "Variação da Umidade Relativa do Ar",
+x = "Data/Hora", y = "Umidade (%)")
+ggplotly(p)
+# --------------------------------------
+# 4. MAPA TEMÁTICO DE FOCOS DE CALOR
+# --------------------------------------
+# Leitura do CSV de focos
+focos_csv <- read_csv("focos_br_ref_2024.csv")
+# Transformar em objeto espacial (sf) com base em lat/lon
+focos_sf <- focos_csv %>%
+filter(!is.na(lat), !is.na(lon)) %>%
+st_as_sf(coords = c("lon", "lat"), crs = 4326)
+# Plotando mapa com base no bioma
+ggplot(focos_sf) +
+geom_sf(aes(color = bioma), alpha = 0.7, size = 2) +
+labs(title = "Focos de Queimada - Mapa 2024 por Bioma",
+color = "Bioma") +
+theme_minimal()
+# --------------------------------------
+# 5. VALIDAÇÃO ESTATÍSTICA DE MODELOS DE ML
+# --------------------------------------
+# Carregar CSV com as previsões do modelo
+resultados <- read_csv("resultados_modelo.csv")
+# Confusion Matrix
+cm <- confusionMatrix(as.factor(resultados$previsto),
+as.factor(resultados$real),
+positive = "1")
+print(cm)
+# Curva ROC
+roc_result <- roc(resultados$real, resultados$probabilidade)
+plot(roc_result, col = "darkorange", main = "Curva ROC - Modelo de Risco de Ignição")
+print(paste("AUC:", round(auc(roc_result), 3)))
+# --------------------------------------
+# 6. EXPORTAR GRÁFICOS (opcional)
+# --------------------------------------
+ggsave("grafico_temp_vs_fumaca.png")
+ggsave("grafico_umidade_linha.png")
+# --------------------------------------
+# 7. CONCLUSÕES INICIAIS
+# --------------------------------------
+cat("Resumo:\n")
+cat("- Correlação entre temperatura e fumaça:", round(correlacao, 2), "\n")
+cat("- AUC do modelo:", round(auc(roc_result), 3), "\n")
+cat("- Resultados prontos para uso no dashboard e relatório.\n")
+load("C:/Users/marco/OneDrive/Área de Trabalho/rstudio/global_solution/.RData")
+# SENTINELA DA MATA
+# André de Oliveira Santos Burger;
+# Diogo Rebello dos Santos;
+# Marcos Vinícius dos Santos Fernandes;
+# Vera Maria Chaves de Souza.
+# --------------------------------------
+# 1. INSTALAÇÃO E CARREGAMENTO DOS PACOTES
+# --------------------------------------
+# Instalação (descomente se necessário)
+install.packages("tidyverse")
+install.packages("sf")
+install.packages("raster")
+install.packages("pROC")
+install.packages("caret")
+install.packages("plotly")
+# Carregamento dos pacotes
+library(tidyverse)
+library(sf)
+library(raster)
+library(pROC)
+library(caret)
+library(plotly)
+# --------------------------------------
+# 2. CARREGAMENTO DOS DADOS
+# --------------------------------------
+# CSV com dados dos sensores
+dados <- read_csv("dados_ambientais.csv")
+head(dados)precisa 'd'
+# SENTINELA DA MATA
+# André de Oliveira Santos Burger;
+# Diogo Rebello dos Santos;
+# Marcos Vinícius dos Santos Fernandes;
+# Vera Maria Chaves de Souza.
+# --------------------------------------
+# 1. INSTALAÇÃO E CARREGAMENTO DOS PACOTES
+# --------------------------------------
+# Instalação (descomente se necessário)
+install.packages("tidyverse")
+install.packages("sf")
+install.packages("raster")
+install.packages("pROC")
+install.packages("caret")
+install.packages("plotly")
+# Carregamento dos pacotes
+library(tidyverse)
+library(sf)
+library(raster)
+library(pROC)
+library(caret)
+library(plotly)
+# --------------------------------------
+# 2. CARREGAMENTO DOS DADOS
+# --------------------------------------
+# CSV com dados dos sensores
+dados <- read_csv("dados_ambientais.csv")
+head(dados)precisa d
+# SENTINELA DA MATA
+# André de Oliveira Santos Burger;
+# Diogo Rebello dos Santos;
+# Marcos Vinícius dos Santos Fernandes;
+# Vera Maria Chaves de Souza.
+# --------------------------------------
+# 1. INSTALAÇÃO E CARREGAMENTO DOS PACOTES
+# --------------------------------------
+# Instalação (descomente se necessário)
+install.packages("tidyverse")
+install.packages("sf")
+install.packages("raster")
+install.packages("pROC")
+install.packages("caret")
+install.packages("plotly")
+# Carregamento dos pacotes
+library(tidyverse)
+library(sf)
+library(raster)
+library(pROC)
+library(caret)
+library(plotly)
+# --------------------------------------
+# 2. CARREGAMENTO DOS DADOS
+# --------------------------------------
+# CSV com dados dos sensores
+dados <- read_csv("dados_ambientais.csv")
+head(dados)precisa d
+# SENTINELA DA MATA
+# André de Oliveira Santos Burger;
+# Diogo Rebello dos Santos;
+# Marcos Vinícius dos Santos Fernandes;
+# Vera Maria Chaves de Souza.
+# --------------------------------------
+# 1. INSTALAÇÃO E CARREGAMENTO DOS PACOTES
+# --------------------------------------
+# Instalação (descomente se necessário)
+install.packages("tidyverse")
+install.packages("sf")
+install.packages("raster")
+install.packages("pROC")
+install.packages("caret")
+install.packages("plotly")
+# Carregamento dos pacotes
+library(tidyverse)
+library(sf)
+library(raster)
+library(pROC)
+library(caret)
+library(plotly)
+# --------------------------------------
+# 2. CARREGAMENTO DOS DADOS
+# --------------------------------------
+# CSV com dados dos sensores
+dados <- read_csv("dados_ambientais.csv")
+head(dados)
+# --------------------------------------
+# 3. ANÁLISE EXPLORATÓRIA (EDA)
+# --------------------------------------
+# Visão geral
+summary(dados)
+str(dados)
+# Correlação entre temperatura e nível de fumaça
+correlacao <- cor(dados$temperatura_ar, dados$nivel_fumaca, use = "complete.obs")
+print(paste("Correlação entre temperatura e fumaça:", round(correlacao, 2)))
+# Gráfico de dispersão
+ggplot(dados, aes(x = temperatura_ar, y = nivel_fumaca)) +
+geom_point(color = "firebrick") +
+geom_smooth(method = "lm", se = FALSE, color = "darkblue") +
+labs(title = "Temperatura vs. Nível de Fumaça",
+x = "Temperatura do Ar (°C)",
+y = "Nível de Fumaça (Sensor MQ-2)")
+# Gráfico interativo da umidade
+p <- ggplot(dados, aes(x = data_hora, y = umidade_ar)) +
+geom_line(color = "darkgreen") +
+labs(title = "Variação da Umidade Relativa do Ar",
+x = "Data/Hora", y = "Umidade (%)")
+ggplotly(p)
+# --------------------------------------
+# 4. MAPA TEMÁTICO DE FOCOS DE CALOR
+# --------------------------------------
+# Leitura do CSV de focos
+focos_csv <- read_csv("focos_br_ref_2024.csv")
+# Transformar em objeto espacial (sf) com base em lat/lon
+focos_sf <- focos_csv %>%
+filter(!is.na(lat), !is.na(lon)) %>%
+st_as_sf(coords = c("lon", "lat"), crs = 4326)
+# Plotando mapa com base no bioma
+ggplot(focos_sf) +
+geom_sf(aes(color = bioma), alpha = 0.7, size = 2) +
+labs(title = "Focos de Queimada - Mapa 2024 por Bioma",
+color = "Bioma") +
+theme_minimal()
+# --------------------------------------
+# 5. VALIDAÇÃO ESTATÍSTICA DE MODELOS DE ML
+# --------------------------------------
+# Carregar CSV com as previsões do modelo
+resultados <- read_csv("resultados_modelo.csv")
+# Confusion Matrix
+cm <- confusionMatrix(as.factor(resultados$previsto),
+as.factor(resultados$real),
+positive = "1")
+print(cm)
+# Curva ROC
+roc_result <- roc(resultados$real, resultados$probabilidade)
+plot(roc_result, col = "darkorange", main = "Curva ROC - Modelo de Risco de ativação")
+print(paste("AUC:", round(auc(roc_result), 3)))
+# --------------------------------------
+# 6. EXPORTAR
+# --------------------------------------
+ggsave("grafico_temp_vs_fumaca.png")
+ggsave("grafico_umidade_linha.png")
+# --------------------------------------
+# 7. FINAL
+# --------------------------------------
+cat("Resumo:\n")
+cat("- Correlação entre temperatura e fumaça:", round(correlacao, 2), "\n")
+cat("- AUC do modelo:", round(auc(roc_result), 3), "\n")
+cat("- Resultados prontos para uso no dashboard e relatório.\n")

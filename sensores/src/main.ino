@@ -9,7 +9,7 @@
 
 const char* ssid = "Wokwi-GUEST";
 const char* password = "";
-const char* serverUrl = "http://172.20.10.3:5000/leituras";  // Altere para o IP da sua API
+const char* serverUrl = "http://192.168.3.6:5000/leituras";  // Altere para o IP da sua API
 
 DHT dht(DHTPIN, DHTTYPE);
 
