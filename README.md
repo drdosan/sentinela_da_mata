@@ -17,6 +17,9 @@ sentinela_da_mata/
 │   ├── modelo_risco_queimada.pkl # Modelo Treinado
 │   └── requirements.txt # Dependências do projeto
 │
+├── analise_r/
+│   └── global_solution.Rproj # Projeto em R
+│
 ├── .gitignore
 └── README.md
 ```
