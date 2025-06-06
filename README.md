@@ -23,7 +23,7 @@ sentinela_da_mata/
 
 ## 🌡️ Fase 1 - ESP32 com Sensores Ambientais
 
-<img src="sensores/simulacao_esp32.png" alt="Simulação ESP32 no Wokwi" width="600"/>
+<img src="sensores/esp32_sensores.png" alt="Simulação ESP32 no Wokwi" width="600"/>
 
 O circuito foi simulado na plataforma [Wokwi](https://wokwi.com/) com os seguintes componentes:
 
